@@ -22,7 +22,7 @@ class RecipesApplicationTests {
 		webClient.post().uri("/recipes")
 				.body(Mono.just(new RecipeCreateRequest()), RecipeCreateRequest.class)
 				.exchange()
-				.expectStatus().isOk()
+				.expectStatus().isCreated()
 				.expectBody(Recipe.class);
 	}
 
@@ -33,5 +33,12 @@ class RecipesApplicationTests {
 				.exchange()
 				.expectStatus().isOk()
 				.expectBody(Recipe.class);
+	}
+
+	@Test
+	void deleteRecipeTest() {
+		webClient.delete().uri("/recipes/1")
+				.exchange()
+				.expectStatus().isOk();
 	}
 }
