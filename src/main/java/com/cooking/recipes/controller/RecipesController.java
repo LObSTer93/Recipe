@@ -6,6 +6,7 @@ import com.cooking.recipes.controller.request.RecipeUpdateRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -13,7 +14,6 @@ import reactor.core.publisher.Mono;
 public class RecipesController {
 
     @PostMapping()
-    @ResponseStatus(HttpStatus.CREATED)
     public Mono<Recipe> add(@RequestBody RecipeCreateRequest recipeCreateRequest, ServerHttpResponse response) {
         response.setStatusCode(HttpStatus.CREATED);
         return Mono.just(new Recipe());
@@ -29,5 +29,17 @@ public class RecipesController {
     public Mono<Void> delete(@PathVariable("recipeId") String recipeId, ServerHttpResponse response) {
         response.setStatusCode(HttpStatus.OK);
         return Mono.empty();
+    }
+
+    @GetMapping("/{recipeId}")
+    public Mono<Recipe> get(ServerHttpResponse response) {
+        response.setStatusCode(HttpStatus.OK);
+        return Mono.just(new Recipe());
+    }
+
+    @GetMapping()
+    public Flux<Recipe> getAll(ServerHttpResponse response) {
+        response.setStatusCode(HttpStatus.OK);
+        return Flux.just(new Recipe());
     }
 }

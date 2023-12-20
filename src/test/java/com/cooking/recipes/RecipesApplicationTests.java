@@ -41,4 +41,20 @@ class RecipesApplicationTests {
 				.exchange()
 				.expectStatus().isOk();
 	}
+
+	@Test
+	void getRecipeTest() {
+		webClient.get().uri("/recipes/1")
+				.exchange()
+				.expectStatus().isOk()
+				.expectBody(Recipe.class);
+	}
+
+	@Test
+	void getRecipesTest() {
+		webClient.get().uri("/recipes")
+				.exchange()
+				.expectStatus().isOk()
+				.expectBodyList(Recipe.class);
+	}
 }
