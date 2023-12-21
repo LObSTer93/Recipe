@@ -1,7 +1,6 @@
 package com.cooking.recipes.controller;
 
 import com.cooking.recipes.model.Recipe;
-import com.cooking.recipes.controller.request.RecipeCreateRequest;
 import com.cooking.recipes.controller.request.RecipeUpdateRequest;
 import com.cooking.recipes.service.RecipeService;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +18,9 @@ public class RecipesController {
     private final RecipeService recipeService;
 
     @PostMapping()
-    public Mono<Recipe> add(@RequestBody RecipeCreateRequest recipeCreateRequest, ServerHttpResponse response) {
+    public Mono<Recipe> add(@RequestBody Recipe recipe, ServerHttpResponse response) {
         response.setStatusCode(HttpStatus.CREATED);
-        return recipeService.create();
+        return recipeService.create(recipe);
     }
 
     @PatchMapping("/{recipeId}")

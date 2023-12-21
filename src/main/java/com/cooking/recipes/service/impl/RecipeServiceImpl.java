@@ -9,8 +9,8 @@ import reactor.core.publisher.Mono;
 @Service
 public class RecipeServiceImpl implements RecipeService {
     @Override
-    public Mono<Recipe> create() {
-        return Mono.just(new Recipe());
+    public Mono<Recipe> create(Recipe recipe) {
+        return Mono.just(recipe);
     }
 
     @Override

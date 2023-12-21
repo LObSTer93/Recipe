@@ -6,7 +6,7 @@ import reactor.core.publisher.Mono;
 
 public interface RecipeService {
 
-    Mono<Recipe> create();
+    Mono<Recipe> create(Recipe recipe);
 
     Mono<Recipe> update();
 
