@@ -1,18 +1,19 @@
 package com.cooking.recipes.service;
 
-import com.cooking.recipes.model.Recipe;
+import com.cooking.recipes.controller.request.RecipeCreateRequest;
+import com.cooking.recipes.controller.response.RecipeResponse;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface RecipeService {
 
-    Mono<Recipe> create(Recipe recipe);
+    Mono<RecipeResponse> create(RecipeCreateRequest recipeCreateRequest);
 
-    Mono<Recipe> update();
+    Mono<RecipeResponse> update();
 
     Mono<Void> delete(String recipeId);
 
-    Mono<Recipe> get(String recipeId);
+    Mono<RecipeResponse> get(String recipeId);
 
-    Flux<Recipe> getAll();
+    Flux<RecipeResponse> getAll();
 }

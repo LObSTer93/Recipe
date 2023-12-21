@@ -1,6 +1,7 @@
 package com.cooking.recipes;
 
-import com.cooking.recipes.model.Recipe;
+import com.cooking.recipes.controller.request.RecipeCreateRequest;
+import com.cooking.recipes.controller.response.RecipeResponse;
 import com.cooking.recipes.controller.request.RecipeUpdateRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,10 @@ class RecipesApplicationTests {
 	@Test
 	void addRecipeTest() {
 		webClient.post().uri("/recipes")
-				.body(Mono.just(new Recipe()), Recipe.class)
+				.body(Mono.just(new RecipeCreateRequest()), RecipeCreateRequest.class)
 				.exchange()
 				.expectStatus().isCreated()
-				.expectBody(Recipe.class);
+				.expectBody(RecipeResponse.class);
 	}
 
 	@Test
@@ -31,7 +32,7 @@ class RecipesApplicationTests {
 				.body(Mono.just(new RecipeUpdateRequest()), RecipeUpdateRequest.class)
 				.exchange()
 				.expectStatus().isOk()
-				.expectBody(Recipe.class);
+				.expectBody(RecipeResponse.class);
 	}
 
 	@Test
@@ -46,7 +47,7 @@ class RecipesApplicationTests {
 		webClient.get().uri("/recipes/1")
 				.exchange()
 				.expectStatus().isOk()
-				.expectBody(Recipe.class);
+				.expectBody(RecipeResponse.class);
 	}
 
 	@Test
@@ -54,6 +55,6 @@ class RecipesApplicationTests {
 		webClient.get().uri("/recipes")
 				.exchange()
 				.expectStatus().isOk()
-				.expectBodyList(Recipe.class);
+				.expectBodyList(RecipeResponse.class);
 	}
 }

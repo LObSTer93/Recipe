@@ -1,6 +1,7 @@
 package com.cooking.recipes.controller;
 
-import com.cooking.recipes.model.Recipe;
+import com.cooking.recipes.controller.request.RecipeCreateRequest;
+import com.cooking.recipes.controller.response.RecipeResponse;
 import com.cooking.recipes.controller.request.RecipeUpdateRequest;
 import com.cooking.recipes.service.RecipeService;
 import lombok.RequiredArgsConstructor;
@@ -18,13 +19,13 @@ public class RecipesController {
     private final RecipeService recipeService;
 
     @PostMapping()
-    public Mono<Recipe> add(@RequestBody Recipe recipe, ServerHttpResponse response) {
+    public Mono<RecipeResponse> add(@RequestBody RecipeCreateRequest recipeCreateRequest, ServerHttpResponse response) {
         response.setStatusCode(HttpStatus.CREATED);
-        return recipeService.create(recipe);
+        return recipeService.create(recipeCreateRequest);
     }
 
     @PatchMapping("/{recipeId}")
-    public Mono<Recipe> update(@PathVariable("recipeId") String recipeId, @RequestBody RecipeUpdateRequest recipeUpdateRequest, ServerHttpResponse response) {
+    public Mono<RecipeResponse> update(@PathVariable("recipeId") String recipeId, @RequestBody RecipeUpdateRequest recipeUpdateRequest, ServerHttpResponse response) {
         response.setStatusCode(HttpStatus.OK);
         return recipeService.update();
     }
@@ -36,13 +37,13 @@ public class RecipesController {
     }
 
     @GetMapping("/{recipeId}")
-    public Mono<Recipe> get(@PathVariable("recipeId") String recipeId, ServerHttpResponse response) {
+    public Mono<RecipeResponse> get(@PathVariable("recipeId") String recipeId, ServerHttpResponse response) {
         response.setStatusCode(HttpStatus.OK);
         return recipeService.get(recipeId);
     }
 
     @GetMapping()
-    public Flux<Recipe> getAll(ServerHttpResponse response) {
+    public Flux<RecipeResponse> getAll(ServerHttpResponse response) {
         response.setStatusCode(HttpStatus.OK);
         return recipeService.getAll();
     }
