@@ -1,6 +1,6 @@
 package com.cooking.recipes;
 
-import com.cooking.recipes.Model.Recipe;
+import com.cooking.recipes.model.Recipe;
 import com.cooking.recipes.controller.request.RecipeCreateRequest;
 import com.cooking.recipes.controller.request.RecipeUpdateRequest;
 import org.junit.jupiter.api.Test;
