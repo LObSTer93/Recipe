@@ -2,6 +2,7 @@ package com.cooking.recipes.service.impl;
 
 import com.cooking.recipes.controller.request.RecipeCreateRequest;
 import com.cooking.recipes.controller.response.RecipeResponse;
+import com.cooking.recipes.data.RecipeRepository;
 import com.cooking.recipes.data.dao.RecipeDao;
 import com.cooking.recipes.service.RecipeService;
 import com.cooking.recipes.util.RecipeMapper;
@@ -14,12 +15,23 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class RecipeServiceImpl implements RecipeService {
 
-    private RecipeMapper recipeMapper;
+    private final RecipeMapper recipeMapper;
+    private final RecipeRepository recipeRepository;
 
     @Override
     public Mono<RecipeResponse> create(RecipeCreateRequest recipeCreateRequest) {
         RecipeDao recipeDao = recipeMapper.requestToDao(recipeCreateRequest);
-        return Mono.just(recipeMapper.daoToResponse(recipeDao));
+
+        return recipeRepository.findByName(recipeDao.name())
+                .hasElement()
+                .flatMap(it -> {
+                        if(it) {
+                            return Mono.error(new IllegalArgumentException("A recipe with this name is already created."));
+                        } else {
+                            return recipeRepository.insert(recipeDao);
+                        }
+                })
+                .map(recipeMapper::daoToResponse);
     }
 
     @Override
